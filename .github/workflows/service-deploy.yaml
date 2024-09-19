@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  EC2_PUBLIC_IP: ec2-54-176-154-129.us-west-1.compute.amazonaws.com
+  EC2_PUBLIC_IP: 54.215.210.154
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # TODO define this secret in your GitHub repo settings
 
 jobs:
@@ -20,10 +20,10 @@ jobs:
       - name: SSH to EC2 instance
         run: |
           echo "$SSH_PRIVATE_KEY" > mykey.pem
-          chmod 400 mykey.pem
+          chmod 600 mykey.pem
           
           # Copy the files from the current work dir into the EC2 instance, under `~/app`.
-          scp -o StrictHostKeyChecking=no -i mykey.pem -r * ubuntu@$EC2_PUBLIC_IP:~/NetflixMovieCatalog_kashish/
+          scp -o StrictHostKeyChecking=no -i mykey.pem -r * ubuntu@$EC2_PUBLIC_IP:~/NetflixMovieCatalog_kashish
           
           # Connect to your EC2 instance and execute the `deploy.sh` script (this script is part of the repo files). 
           # TODO You need to implement the `deploy.sh` script yourself.
